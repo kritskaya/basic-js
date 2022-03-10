@@ -40,27 +40,49 @@ describe('Make chain!', () => {
     describe('functional requirements', () => {
         it.optional('function returns correct values', () => {
             assert.deepEqual(chainMaker.addLink('GHI').addLink(null).reverseChain().addLink(333).reverseChain().reverseChain().addLink(0).reverseChain().reverseChain().addLink('GHI').finishChain(), '( null )~~( GHI )~~( 333 )~~( 0 )~~( GHI )');
+            
             assert.deepEqual(chainMaker.addLink('8.963').reverseChain().reverseChain().reverseChain().reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink(3.14).addLink('DEF').reverseChain().finishChain(), '( DEF )~~( 3.14 )~~( 8.963 )~~( [object Object] )');
+            
             assert.deepEqual(chainMaker.addLink(false).reverseChain().reverseChain().reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink(1.233).addLink(false).addLink(1).reverseChain().addLink(1).finishChain(), '( 1 )~~( false )~~( 1.233 )~~( [object Object] )~~( false )~~( 1 )');
+            
             assert.deepEqual(chainMaker.reverseChain().reverseChain().addLink(NaN).addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink(true).finishChain(), '( NaN )~~( [object Object] )~~( [object Object] )~~( [object Object] )~~( [object Object] )~~( true )');
+            
             assert.deepEqual(chainMaker.addLink(1).reverseChain().addLink(0).reverseChain().addLink(NaN).addLink(1.233).addLink(null).addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).finishChain(), '( [object Object] )~~( null )~~( 1.233 )~~( NaN )~~( 1 )~~( 0 )~~( [object Object] )');
+            
             assert.deepEqual(chainMaker.addLink(NaN).addLink(null).addLink(Infinity).addLink(1).reverseChain().addLink(null).reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink(22).addLink(333).finishChain(), '( null )~~( NaN )~~( null )~~( Infinity )~~( 1 )~~( [object Object] )~~( 22 )~~( 333 )');
+            
             assert.deepEqual(chainMaker.addLink(0).addLink(NaN).addLink(1).reverseChain().addLink(0).reverseChain().reverseChain().addLink(1).addLink(Infinity).reverseChain().finishChain(), '( Infinity )~~( 1 )~~( 0 )~~( 0 )~~( NaN )~~( 1 )');
+            
             assert.deepEqual(chainMaker.addLink('ABC').reverseChain().addLink(Infinity).addLink(null).addLink('8.963').addLink(false).addLink(Infinity).reverseChain().addLink(false).reverseChain().finishChain(), '( false )~~( ABC )~~( Infinity )~~( null )~~( 8.963 )~~( false )~~( Infinity )');
+            
             assert.deepEqual(chainMaker.reverseChain().addLink('DEF').reverseChain().reverseChain().reverseChain().addLink(333).addLink(null).addLink(0).reverseChain().reverseChain().finishChain(), '( DEF )~~( 333 )~~( null )~~( 0 )');
+            
             assert.deepEqual(chainMaker.addLink('DEF').reverseChain().addLink('8.963').reverseChain().reverseChain().reverseChain().addLink(3.14).reverseChain().reverseChain().reverseChain().finishChain(), '( 3.14 )~~( DEF )~~( 8.963 )');
+            
             assert.deepEqual(chainMaker.reverseChain().reverseChain().addLink(false).addLink(true).reverseChain().addLink(null).addLink(0).addLink(3.14).addLink('8.963').addLink('GHI').finishChain(), '( true )~~( false )~~( null )~~( 0 )~~( 3.14 )~~( 8.963 )~~( GHI )');
+            
             assert.deepEqual(chainMaker.addLink(1.233).addLink('ABC').addLink('GHI').reverseChain().addLink(NaN).addLink(false).addLink('ABC').reverseChain().reverseChain().reverseChain().finishChain(), '( ABC )~~( false )~~( NaN )~~( 1.233 )~~( ABC )~~( GHI )');
+            
             assert.deepEqual(chainMaker.reverseChain().addLink('GHI').reverseChain().reverseChain().reverseChain().addLink('DEF').addLink(Infinity).reverseChain().addLink(Infinity).reverseChain().finishChain(), '( Infinity )~~( GHI )~~( DEF )~~( Infinity )');
+            
             assert.deepEqual(chainMaker.addLink(333).reverseChain().addLink(NaN).reverseChain().addLink(0).reverseChain().addLink('ABC').reverseChain().addLink(1.233).addLink(null).finishChain(), '( ABC )~~( NaN )~~( 333 )~~( 0 )~~( 1.233 )~~( null )');
+            
             assert.deepEqual(chainMaker.reverseChain().addLink(false).reverseChain().reverseChain().addLink(Infinity).addLink(NaN).reverseChain().addLink(22).reverseChain().reverseChain().finishChain(), '( NaN )~~( Infinity )~~( false )~~( 22 )');
+            
             assert.deepEqual(chainMaker.addLink('DEF').addLink(22).addLink('ABC').addLink(3.14).addLink(333).addLink('8.963').addLink(0).addLink(1.233).addLink(NaN).reverseChain().finishChain(), '( NaN )~~( 1.233 )~~( 0 )~~( 8.963 )~~( 333 )~~( 3.14 )~~( ABC )~~( 22 )~~( DEF )');
+            
             assert.deepEqual(chainMaker.reverseChain().addLink(null).addLink(false).addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink(1).reverseChain().reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().finishChain(), '( [object Object] )~~( 1 )~~( null )~~( false )~~( [object Object] )');
+            
             assert.deepEqual(chainMaker.addLink('DEF').reverseChain().reverseChain().reverseChain().reverseChain().reverseChain().reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink(3.14).addLink('DEF').finishChain(), '( DEF )~~( [object Object] )~~( 3.14 )~~( DEF )');
+            
             assert.deepEqual(chainMaker.addLink('DEF').addLink(1.233).reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink(1).reverseChain().addLink(NaN).reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().finishChain(), '( [object Object] )~~( 1 )~~( [object Object] )~~( DEF )~~( 1.233 )~~( NaN )');
+            
             assert.deepEqual(chainMaker.addLink(null).reverseChain().addLink(1).addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink(22).addLink(3.14).reverseChain().reverseChain().reverseChain().finishChain(), '( 3.14 )~~( 22 )~~( null )~~( 1 )~~( [object Object] )');
+            
             assert.deepEqual(chainMaker.reverseChain().reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink(NaN).reverseChain().reverseChain().reverseChain().finishChain(), '( NaN )~~( [object Object] )~~( [object Object] )');
+            
             assert.deepEqual(chainMaker.addLink(1).addLink('DEF').addLink(1.233).addLink(0).reverseChain().reverseChain().reverseChain().reverseChain().addLink(NaN).reverseChain().finishChain(), '( NaN )~~( 0 )~~( 1.233 )~~( DEF )~~( 1 )');
+            
             assert.deepEqual(chainMaker.addLink('8.963').addLink('GHI').reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().reverseChain().addLink(NaN).reverseChain().addLink(1.233).addLink(333).finishChain(), '( NaN )~~( [object Object] )~~( 8.963 )~~( GHI )~~( 1.233 )~~( 333 )');
             assert.deepEqual(chainMaker.addLink(true).addLink({ 0: 'first', 1: 'second', 'length': 2 }).addLink(false).reverseChain().addLink(Infinity).addLink(1.233).reverseChain().addLink(3.14).reverseChain().addLink('GHI').finishChain(), '( 3.14 )~~( false )~~( [object Object] )~~( true )~~( Infinity )~~( 1.233 )~~( GHI )');
             assert.deepEqual(chainMaker.reverseChain().addLink('GHI').addLink(NaN).reverseChain().reverseChain().addLink(false).addLink(3.14).reverseChain().reverseChain().addLink(333).finishChain(), '( GHI )~~( NaN )~~( false )~~( 3.14 )~~( 333 )');
@@ -142,7 +164,9 @@ describe('Make chain!', () => {
         });
         it.optional('removeLinks works correctly', () => {
             assert.deepEqual(chainMaker.reverseChain().reverseChain().reverseChain().addLink(NaN).reverseChain().addLink(null).addLink(1.233).addLink(true).addLink(false).removeLink(3).addLink(1.233).finishChain(), '( NaN )~~( null )~~( true )~~( false )~~( 1.233 )');
+            
             assert.deepEqual(chainMaker.reverseChain().addLink('ABC').reverseChain().reverseChain().reverseChain().addLink(Infinity).addLink(false).addLink(0).addLink('8.963').removeLink(2).removeLink(1).reverseChain().finishChain(), '( 8.963 )~~( 0 )~~( false )');
+            
             assert.deepEqual(chainMaker.addLink(null).addLink(false).addLink(22).reverseChain().reverseChain().removeLink(2).reverseChain().reverseChain().addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink('DEF').finishChain(), '( [object Object] )~~( 22 )~~( null )~~( DEF )');
             assert.deepEqual(chainMaker.addLink(3.14).addLink(1).addLink({ 0: 'first', 1: 'second', 'length': 2 }).removeLink(1).addLink('DEF').addLink({ 0: 'first', 1: 'second', 'length': 2 }).removeLink(1).addLink(true).addLink(false).addLink(333).reverseChain().reverseChain().finishChain(), '( [object Object] )~~( DEF )~~( [object Object] )~~( true )~~( false )~~( 333 )');
             assert.deepEqual(chainMaker.addLink('ABC').reverseChain().reverseChain().addLink('DEF').removeLink(1).addLink({ 0: 'first', 1: 'second', 'length': 2 }).reverseChain().addLink(1.233).addLink(1.233).reverseChain().addLink('ABC').finishChain(), '( 1.233 )~~( 1.233 )~~( DEF )~~( [object Object] )~~( ABC )');
